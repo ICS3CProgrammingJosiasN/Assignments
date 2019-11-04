@@ -64,6 +64,7 @@ local function AskQuestion()
 	randomOperator = math.random(1, 5)
 	randomNumber1 = math.random(1, 10)
 	randomNumber2 = math.random(1, 10)
+  randomOperator = 4
 	
 
 	if (randomOperator == 1) then 
