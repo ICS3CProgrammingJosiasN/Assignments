@@ -52,13 +52,13 @@ end
 
 -- Creating Transition to Soccer Screen
 local function SoccerTransition( )
-    composer.gotoScene( "level1_screen", {effect = "zoomInOutFade", time = 1000})
+    composer.gotoScene( "SoccerMain_screen", {effect = "zoomInOutFade", time = 1000})
 end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO Baking SCREEN 
 
 local function BakingTransition()
-    composer.gotoScene( "credits_screen", {effect = "flipFadeOutIn", time = 500})
+    composer.gotoScene( "BakingMain_screen", {effect = "flipFadeOutIn", time = 500})
 end     
 
 -----------------------------------------------------------------------------------------
