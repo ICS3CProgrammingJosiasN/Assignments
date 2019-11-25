@@ -35,7 +35,7 @@ local backButton
 
 -- Creating Transitioning Function back to main menu
 local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
+    composer.gotoScene( "SoccerMain_screen", {effect = "zoomOutInFadeRotate", time = 500})
 end
 
 
@@ -54,7 +54,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImageRect("Images/BakingInstructionScreenLogan@2x.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/SoccerInstructionsScreenLoganS@2x.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -74,8 +74,10 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
-        x = display.contentWidth*1/8,
-        y = display.contentHeight*15/16,
+        x = display.contentWidth*7/8,
+        y = display.contentHeight*7/8,
+        width = 250,
+        height = 150,
 
         -- Setting Dimensions
         -- width = 1000,

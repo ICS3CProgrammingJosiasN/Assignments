@@ -97,8 +97,10 @@ function scene:create( event )
     SoccerButton = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth/2,
-            y = display.contentHeight*7/8,
+            x = display.contentWidth*7/9,
+            y = display.contentHeight*7/9,
+            width = 250,
+            height = 150,
 
             -- Insert the images here
             defaultFile = "Images/SoccerButtonUnpressedMelody@2x.png",
@@ -114,11 +116,13 @@ function scene:create( event )
     creditsButton = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/8,
-            y = display.contentHeight*7/8,
+            x = display.contentWidth*4.5/9,
+            y = display.contentHeight*4.5/9,
+            width = 250,
+            height = 150,
 
             -- Insert the images here
-            defaultFile = "Images/CreditsButtonUnpressedJosias@2x.png",
+            defaultFile = "Images/CreditsButtonUnPressedJosias@2x.png",
             overFile = "Images/CreditsButtonPressedJosias@2x.png",
 
             -- When the button is released, call the Credits transition function
@@ -133,8 +137,10 @@ function scene:create( event )
     BakingButton = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*6/8,
-            y = display.contentHeight*6/8,
+            x = display.contentWidth*2/7,
+            y = display.contentHeight*2/7,
+            width = 250,
+            height = 150,
 
             -- Insert the images here
             defaultFile = "Images/BakingButtonUnpressedMelody@2x.png",

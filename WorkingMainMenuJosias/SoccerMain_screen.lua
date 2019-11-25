@@ -55,8 +55,8 @@ end
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO Baking SCREEN 
 
-local function SoccerinstructionTransition()
-    composer.gotoScene( "Soccerinstruction_screen", {effect = "flipFadeOutIn", time = 500})
+local function SoccerInstructionTransition()
+    composer.gotoScene( "SoccerInstruction_screen", {effect = "flipFadeOutIn", time = 500})
 end     
 
 -----------------------------------------------------------------------------------------
@@ -95,8 +95,10 @@ function scene:create( event )
     BackButton = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth/2,
-            y = display.contentHeight*7/8,
+            x = display.contentWidth*7/9,
+            y = display.contentHeight*7/9,
+            width = 250,
+            height = 150,
 
             -- Insert the images here
             defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
@@ -112,15 +114,17 @@ function scene:create( event )
     PlayButton = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/8,
-            y = display.contentHeight*7/8,
+            x = display.contentWidth*4.5/9,
+            y = display.contentHeight*4.5/9,
+            width = 250,
+            height = 150,
 
             -- Insert the images here
             defaultFile = "Images/PlayButtonUnpressed@2x.png",
             overFile = "Images/PlayButtonPressed@2x.png",
 
             -- When the button is released, call the Credits transition function
-            onRelease = CreditsTransition
+            onRelease = PlayTransition
         } ) 
     
     -- ADD INSTRUCTIONS BUTTON WIDGET
@@ -131,22 +135,24 @@ function scene:create( event )
     SoccerInstructionButton = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*6/8,
-            y = display.contentHeight*6/8,
+            x = display.contentWidth*2/7,
+            y = display.contentHeight*2/7,
+            width = 250,
+            height = 150,
 
             -- Insert the images here
-            defaultFile = "Images/InstructionsButtoUnpressed.png",
+            defaultFile = "Images/InstructionsButtonUnpressed.png",
             overFile = "Images/InstructionsButtonpressed.png",
 
             -- When the button is released, call the Credits transition function
-            onRelease = PlayTransition
+            onRelease = SoccerInstructionTransition
         } ) 
     
     -- ADD INSTRUCTIONS BUTTON WIDGET
 
     -----------------------------------------------------------------------------------------
     -- Associating button widgets with this scene
-    sceneGroup:insert( playButton )
+    sceneGroup:insert( PlayButton )
     sceneGroup:insert( BackButton )
     sceneGroup:insert( SoccerInstructionButton)
     
