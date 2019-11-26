@@ -101,7 +101,7 @@ function scene:create( event )
             height = 150,
 
             -- Insert the images here
-            defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
+            defaultFile = "Images/BackbuttonUnpressedJosias@2x.png",
             overFile = "Images/BackButtonPressedJosias@2x.png",
 
             -- When the button is released, call the Level1 screen transition function
@@ -142,7 +142,7 @@ function scene:create( event )
 
             -- Insert the images here
             defaultFile = "Images/InstructionsButtonUnpressed.png",
-            overFile = "Images/InstructionsButtonpressed.png",
+            overFile = "Images/InstructionsButtonPressed.png",
 
             -- When the button is released, call the Credits transition function
             onRelease = SoccerInstructionTransition
