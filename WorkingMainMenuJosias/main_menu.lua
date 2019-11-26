@@ -38,6 +38,8 @@ local creditsButton
 local bakingButton
 local soccerButton
 local instructionButton
+local mainmenuSound = audio.loadStream( "Sounds/mainmenuSound.mp3")
+local mainmenuSoundChannel = audio.play( mainmenuSound, { channel=1, loops=-1} )
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -169,6 +171,7 @@ end -- function scene:create( event )
 -- The function called when the scene is issued to appear on screen
 function scene:show( event )
 
+
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
@@ -186,7 +189,9 @@ function scene:show( event )
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
-    elseif ( phase == "did" ) then       
+    elseif ( phase == "did" ) then 
+
+        mainmenuSoundChannel = audio.play(mainmenuSound)
         
 
     end
@@ -214,11 +219,13 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        mainmenuSound = audio.stop()
 
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+
     end
 
 end -- function scene:hide( event )

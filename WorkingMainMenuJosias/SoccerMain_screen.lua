@@ -36,6 +36,9 @@ local bkg_image
 local SoccerInstructionButton
 local PlayButton
 local BackButton
+local soccerSound = audio.loadStream( "Sounds/soccerSound.mp3")
+local soccerSoundChannel = audio.play( soccerSound, { channel=1, loops=-1} )
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -184,7 +187,8 @@ function scene:show( event )
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
-    elseif ( phase == "did" ) then       
+    elseif ( phase == "did" ) then 
+        soccerSoundChannel = audio.play(soccerSound)      
         
 
     end
@@ -213,10 +217,12 @@ function scene:hide( event )
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
 
+        soccerSound = audio.stop()
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+
     end
 
 end -- function scene:hide( event )
