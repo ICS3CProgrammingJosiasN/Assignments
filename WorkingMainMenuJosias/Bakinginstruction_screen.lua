@@ -28,6 +28,9 @@ scene = composer.newScene( sceneName ) -- This function doesn't accept a string,
 -----------------------------------------------------------------------------------------
 local bkg_image
 local backButton
+local bakingSound = audio.loadStream( "Sounds/bakingSound.mp3")
+local bakingSoundChannel = audio.play( bakingSound, { channel=1, loops=-1} )
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -76,6 +79,7 @@ function scene:create( event )
         -- Setting Position
         x = display.contentWidth*7.8/8,
         y = display.contentHeight*7.8/8,
+        -- sets the size of the button 
         width = 250,
         height = 150,
 
@@ -122,6 +126,8 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        -- plays the baking sound 
+        bakingSoundChannel = audio.play(bakingSound)
     end
 
 end -- function scene:show( event )
@@ -144,6 +150,9 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        -- stop the baking sound
+        bakingSound = audio.stop()
+
 
     -----------------------------------------------------------------------------------------
 

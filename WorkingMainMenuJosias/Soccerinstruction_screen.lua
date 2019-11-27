@@ -28,12 +28,14 @@ scene = composer.newScene( sceneName ) -- This function doesn't accept a string,
 -----------------------------------------------------------------------------------------
 local bkg_image
 local backButton
+local soccerSound = audio.loadStream( "Sounds/soccerSound.mp3")
+local soccerSoundChannel = audio.play( soccerSound, { channel=1, loops=-1} )
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
--- Creating Transitioning Function back to main menu
+-- Creating Transitioning Function back to soccer main screen 
 local function BackTransition( )
     composer.gotoScene( "SoccerMain_screen", {effect = "zoomOutInFadeRotate", time = 500})
 end
@@ -76,6 +78,7 @@ function scene:create( event )
         -- Setting Position
         x = display.contentWidth*2/7,
         y = display.contentHeight*2/7,
+        -- sets the size of the button
         width = 250,
         height = 150,
 
@@ -119,6 +122,8 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        -- plays the soccer sound 
+        soccerSoundChannel = audio.play(soccerSound)
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
@@ -144,6 +149,9 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        -- stop the soccer sound 
+        soccerSound = audio.stop()
+
 
     -----------------------------------------------------------------------------------------
 

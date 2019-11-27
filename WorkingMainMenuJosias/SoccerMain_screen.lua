@@ -54,6 +54,7 @@ end
 -- Creating Transition to Soccer Screen
 local function BackTransition( )
     composer.gotoScene( "main_menu", {effect = "zoomInOutFade", time = 1000})
+
 end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO Baking SCREEN 
@@ -100,6 +101,7 @@ function scene:create( event )
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*7/9,
             y = display.contentHeight*7/9,
+            -- sets the size of the button 
             width = 250,
             height = 150,
 
@@ -119,6 +121,7 @@ function scene:create( event )
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*4.5/9,
             y = display.contentHeight*4.5/9,
+            -- sets the size of the button 
             width = 250,
             height = 150,
 
@@ -140,6 +143,7 @@ function scene:create( event )
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*2/7,
             y = display.contentHeight*2/7,
+            -- sets the size of the button 
             width = 250,
             height = 150,
 
@@ -188,6 +192,7 @@ function scene:show( event )
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then 
+        -- plays the soccer sound 
         soccerSoundChannel = audio.play(soccerSound)      
         
 
@@ -216,7 +221,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-
+        -- stop the soccer sound 
         soccerSound = audio.stop()
     -----------------------------------------------------------------------------------------
 
