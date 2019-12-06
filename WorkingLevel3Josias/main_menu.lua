@@ -35,9 +35,12 @@ local scene = composer.newScene( sceneName )
 local bkg_image
 local playButton
 local creditsButton
-local bakingButton
-local soccerButton
-local instructionButton
+local level1Button
+local level2Button
+local level3Button
+local level4Button
+local bakinginstructionButton
+local SoccerInstructionButton
 local mainmenuSound = audio.loadStream( "Sounds/mainmenuSound.mp3")
 local mainmenuSoundChannel = audio.play( mainmenuSound, { channel=1, loops=-1} )
 
@@ -52,17 +55,32 @@ end
 
 -----------------------------------------------------------------------------------------
 
--- Creating Transition to Soccer Screen
-local function SoccerTransition( )
-    composer.gotoScene( "SoccerMain_screen", {effect = "zoomInOutFade", time = 1000})
-end    
+-- Creating Transition Function to Credits Page
+local function level1Transition( )       
+    composer.gotoScene( "level1_screen", {effect = "flipFadeOutIn", time = 500})
+end     
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO Baking SCREEN 
 
-local function BakingTransition()
-    composer.gotoScene( "BakingMain_screen", {effect = "flipFadeOutIn", time = 500})
+local function level2Transition()
+    composer.gotoScene( "level2_screen", {effect = "flipFadeOutIn", time = 500})
+end
+ 
+local function level3Transition()
+    composer.gotoScene( "level3_screen", {effect = "flipFadeOutIn", time = 500})
+end
+
+local function level4Transition()
+    composer.gotoScene( "level4_screen", {effect = "flipFadeOutIn", time = 500})
 end     
 
+local function SoccerInstructionTransition()
+    composer.gotoScene( "SoccerInstruction_screen", {effect = "flipFadeOutIn", time = 500})
+end
+
+local function BakingInstructionTransition()
+    composer.gotoScene( "BakingInstruction_screen", {effect = "flipFadeOutIn", time = 500})
+end 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -96,7 +114,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------   
 
     -- Creating Play Button
-    SoccerButton = widget.newButton( 
+    level1Button = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*7/9,
@@ -106,16 +124,72 @@ function scene:create( event )
             height = 150,
 
             -- Insert the images here
-            defaultFile = "Images/SoccerButtonUnpressedMelody@2x.png",
-            overFile = "Images/SoccerButtonPressedMelody@2x.png",
+            defaultFile = "Images/level1ButtonUnpressedMelody@2x.png",
+            overFile = "Images/level1ButtonPressedMelody@2x.png",
 
             -- When the button is released, call the soccer transition function
-            onRelease = SoccerTransition          
+            onRelease = level1Transition          
         } )
 
     -----------------------------------------------------------------------------------------
+    -- Creating Play Button
+    level2Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth*7/9,
+            y = display.contentHeight*7/9,
+            -- sets the size of the button 
+            width = 250,
+            height = 150,
 
-    -- Creating Credits Button
+            -- Insert the images here
+            defaultFile = "Images/level2ButtonUnpressedMelody@2x.png",
+            overFile = "Images/level2ButtonPressedMelody@2x.png",
+
+            -- When the button is released, call the soccer transition function
+            onRelease = level2Transition          
+        } )
+
+    -----------------------------------------------------------------------------------------
+    -- Creating Play Button
+    level3Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth*7/9,
+            y = display.contentHeight*7/9,
+            -- sets the size of the button 
+            width = 250,
+            height = 150,
+
+            -- Insert the images here
+            defaultFile = "Images/level3ButtonUnpressedMelody@2x.png",
+            overFile = "Images/level3ButtonPressedMelody@2x.png",
+
+            -- When the button is released, call the soccer transition function
+            onRelease = level3Transition          
+        } )
+
+    -----------------------------------------------------------------------------------------
+    -- Creating Play Button
+    level4Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth*7/9,
+            y = display.contentHeight*7/9,
+            -- sets the size of the button 
+            width = 250,
+            height = 150,
+
+            -- Insert the images here
+            defaultFile = "Images/level4ButtonUnpressedMelody@2x.png",
+            overFile = "Images/level4ButtonPressedMelody@2x.png",
+
+            -- When the button is released, call the soccer transition function
+            onRelease = level4Transition          
+        } )
+
+    -----------------------------------------------------------------------------------------
+     -- Creating Credits Button
     creditsButton = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
@@ -135,27 +209,26 @@ function scene:create( event )
     
     -- ADD INSTRUCTIONS BUTTON WIDGET
 
-    -----------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------
 
     -- Creating Instructions Button
-    BakingButton = widget.newButton( 
+    SoccerInstructionButton = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*2/7,
             y = display.contentHeight*2/7,
-            -- sets the size of the button
+            -- sets the size of the button 
             width = 250,
             height = 150,
 
             -- Insert the images here
-            defaultFile = "Images/BakingButtonUnpressedMelody@2x.png",
-            overFile = "Images/BakingButtonPressedMelody@2x.png",
+            defaultFile = "Images/InstructionsButtonUnpressed.png",
+            overFile = "Images/InstructionsButtonPressed.png",
 
-            -- When the button is released, call the Baking transition function
-            onRelease = BakingTransition
+            -- When the button is released, call the Credits transition function
+            onRelease = SoccerInstructionTransition
         } ) 
     
-    -- ADD INSTRUCTIONS BUTTON WIDGET
 
     -----------------------------------------------------------------------------------------
     -- Associating button widgets with this scene

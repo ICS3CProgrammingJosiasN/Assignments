@@ -46,7 +46,7 @@ local soccerSoundChannel = audio.play( soccerSound, { channel=1, loops=-1} )
 
 -- Creating Transition Function to Credits Page
 local function PlayTransition( )       
-    composer.gotoScene( "Soccerlevel1_screen", {effect = "flipFadeOutIn", time = 500})
+    composer.gotoScene( "Soccerlevel3_screen", {effect = "flipFadeOutIn", time = 500})
 end 
 
 -----------------------------------------------------------------------------------------
