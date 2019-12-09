@@ -38,7 +38,7 @@ local bakingSoundChannel = audio.play( bakingSound, { channel=1, loops=-1} )
 
 -- Creating Transitioning Function back to main menu
 local function BackTransition( )
-    composer.gotoScene( "BakingMain_screen", {effect = "zoomOutInFadeRotate", time = 500})
+    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
 end
 
 
@@ -77,11 +77,11 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
-        x = display.contentWidth*7.8/8,
-        y = display.contentHeight*7.8/8,
-        -- sets the size of the button 
-        width = 250,
-        height = 150,
+        x = display.contentWidth*0.5/5,
+        y = display.contentHeight*0.5/5,
+        -- sets the size of the button
+        width = 150,
+        height = 75,
 
         -- Setting Dimensions
         -- width = 1000,

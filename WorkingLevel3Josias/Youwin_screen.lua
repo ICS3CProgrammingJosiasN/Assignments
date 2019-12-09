@@ -1,49 +1,35 @@
 -----------------------------------------------------------------------------------------
 --
 -- credits_screen.lua
--- Created by: Your Name
--- Special thanks to Wal Wal for helping in the design of this framework.
--- Date: Month Day, Year
--- Description: This is the credits page, displaying a back button to the main menu.
+-- Created by: Daniel Lopez-Carreon
+-- Date: Nov. 24th, 2014
+-- Description: This is the you win screen
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
 
--- Use Composer Libraries
+-- Use Composer Library
 local composer = require( "composer" )
+
+-----------------------------------------------------------------------------------------
+
+-- Use Widget Library
 local widget = require( "widget" )
 
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "SoccerInstruction_screen"
+sceneName = "you_win"
 
 -- Creating Scene Object
-scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
+local scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
 
 -----------------------------------------------------------------------------------------
--- LOCAL VARIABLES
+-- DISPLAY OBJECTS
 -----------------------------------------------------------------------------------------
 local bkg_image
-local backButton
-local soccerSound = audio.loadStream( "Sounds/soccerSound.mp3")
-local soccerSoundChannel = audio.play( soccerSound, { channel=1, loops=-1} )
-
------------------------------------------------------------------------------------------
--- LOCAL FUNCTIONS
------------------------------------------------------------------------------------------
-
--- Creating Transitioning Function back to soccer main screen 
-local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
-end
-
-
------------------------------------------------------------------------------------------
--- GLOBAL SCENE FUNCTIONS
------------------------------------------------------------------------------------------
 
 -- The function called when the screen doesn't exist
 function scene:create( event )
@@ -56,7 +42,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImageRect("Images/SoccerInstructionsScreenLoganS@2x.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImage("Images/Winscreen.png")
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -64,44 +50,7 @@ function scene:create( event )
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
-
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
-
-    -----------------------------------------------------------------------------------------
-    -- BUTTON WIDGETS
-    -----------------------------------------------------------------------------------------
-
-    -- Creating Back Button
-    backButton = widget.newButton( 
-    {
-        -- Setting Position
-        x = display.contentWidth*0.2/2.5,
-        y = display.contentHeight*0.2/2.5,
-        -- sets the size of the button
-        width = 150,
-        height = 75,
-
-        -- Setting Dimensions
-        -- width = 1000,
-        -- height = 106,
-
-        -- Setting Visual Properties
-        defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
-        overFile = "Images/BackButtonPressedJosias@2x.png",
-
-        -- Setting Functional Properties
-        onRelease = BackTransition
-
-    } )
-
-    -----------------------------------------------------------------------------------------
-
-    -- Associating Buttons with this scene
-    sceneGroup:insert( backButton )
-    
-end --function scene:create( event )
-
+end
 -----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
@@ -122,8 +71,6 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-        -- plays the soccer sound 
-        soccerSoundChannel = audio.play(soccerSound)
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
@@ -149,9 +96,6 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        -- stop the soccer sound 
-        soccerSound = audio.stop()
-
 
     -----------------------------------------------------------------------------------------
 

@@ -117,8 +117,8 @@ function scene:create( event )
     level1Button = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/9,
-            y = display.contentHeight*7/9,
+            x = display.contentWidth*1/5,
+            y = display.contentHeight*4/10,
             -- sets the size of the button 
             width = 250,
             height = 150,
@@ -136,8 +136,8 @@ function scene:create( event )
     level2Button = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/9,
-            y = display.contentHeight*7/9,
+            x = display.contentWidth*1/5,
+            y = display.contentHeight*6/10,
             -- sets the size of the button 
             width = 250,
             height = 150,
@@ -155,8 +155,8 @@ function scene:create( event )
     level3Button = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/9,
-            y = display.contentHeight*7/9,
+            x = display.contentWidth*4/5,
+            y = display.contentHeight*4/10,
             -- sets the size of the button 
             width = 250,
             height = 150,
@@ -174,8 +174,8 @@ function scene:create( event )
     level4Button = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/9,
-            y = display.contentHeight*7/9,
+            x = display.contentWidth*4/5,
+            y = display.contentHeight*6/10,
             -- sets the size of the button 
             width = 250,
             height = 150,
@@ -215,8 +215,8 @@ function scene:create( event )
     SoccerInstructionButton = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*2/7,
-            y = display.contentHeight*2/7,
+            x = display.contentWidth*4/5,
+            y = display.contentHeight*8/10,
             -- sets the size of the button 
             width = 250,
             height = 150,
@@ -230,11 +230,36 @@ function scene:create( event )
         } ) 
     
 
-    -----------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------
+
+    -- Creating Instructions Button
+    bakinginstructionButton = widget.newButton( 
+        {
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth*1/5,
+            y = display.contentHeight*8/10,
+            -- sets the size of the button 
+            width = 250,
+            height = 150,
+
+            -- Insert the images here
+            defaultFile = "Images/InstructionsButtonUnpressed.png",
+            overFile = "Images/InstructionsButtonPressed.png",
+
+            -- When the button is released, call the Credits transition function
+            onRelease = BakingInstructionTransition
+        } ) 
+    
+
+    -----------------------------------------------------------------------------------------    
     -- Associating button widgets with this scene
-    sceneGroup:insert( SoccerButton )
-    sceneGroup:insert( BakingButton )
+    sceneGroup:insert( level1Button )
+    sceneGroup:insert( level2Button )
+    sceneGroup:insert( level3Button )
+    sceneGroup:insert( level4Button )
     sceneGroup:insert( creditsButton)
+    sceneGroup:insert( bakinginstructionButton )
+    sceneGroup:insert( SoccerInstructionButton )
     
     -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
 
