@@ -27,13 +27,33 @@ local scene = composer.newScene( sceneName )
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
+-- sounds
+local correctSound = audio.loadSound( "Sounds/correctSound.mp3")
+local correctSoundChannel
+local wrongSound = audio.loadSound9 ("Sounds/wrongSound.mp3")
+local wrongSoundChannel
+
+-- timer
+local totalSeconds = 10 
+local secondsLeft = 10
+local clockText 
+local countDownTimer
+
+-- hearts 
+local lives = 4 
+local heart1 
+local heart2 
+local heart3 
+local heart4 
+
 -- The background image and soccer ball for this scene
 local bkg_image
 local soccerball
 
 --the text that displays the question
 local questionText 
-
+local correctObject
+local incorrectObject
 --the alternate numbers randomly generated
 local correctAnswer
 local alternateAnswer1
@@ -68,6 +88,8 @@ local userAnswerBoxPlaceholder
 -- sound effects
 local correctSound
 local booSound
+local points = 0
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -77,28 +99,66 @@ local function BackTransition()
 end 
 
 local function DisplayQuestion()
+    local randomOperator 
     local randomNumber1
     local randomNumber2
+    local tempRandomNumber
 
     --set random numbers
     randomNumber1 = math.random(2, 15)
     randomNumber2 = math.random(2, 15)
+    randomOperator = math.random(1, 2)
 
-    --calculate answer
-    correctAnswer = randomNumber1 + randomNumber2
+    if (randomOperator == 1) then
+       
 
-    --change question text in relation to answer
-    questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
+        --calculate answer
+        correctAnswer = randomNumber1 + randomNumber2
 
-    -- put the correct answer into the answerbox
-    answerbox.text = correctAnswer
+        --change question text in relation to answer
+        questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
 
-    -- make it possible to click on the answers again
-    answerboxAlreadyTouched = false
-    alternateAnswerBox1AlreadyTouched = false
-    alternateAnswerBox2AlreadyTouched = false
+        -- put the correct answer into the answerbox
+        answerbox.text = correctAnswer
+
+        -- make it possible to click on the answers again
+        answerboxAlreadyTouched = false
+        alternateAnswerBox1AlreadyTouched = false
+        alternateAnswerBox2AlreadyTouched = false
+    elseif (randomOperator == 2) then
+
+        if (randomNumber1 < randomNumber2)then
+            tempRandomNumber = randomNumber1
+            randomNumber1 = randomNumber2
+            randomNumber2 = tempRandomNumber
+        end          
+    
+        -- calculate answer 
+        correctAnswer = randomNumber1 - randomNumber2
+
+        -- change the question text in relation to answer 
+        questionText.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
+
+        -- put the correct answer intio the answerbox
+        answerbox.text = correctAnswer
+
+        -- make it possible to click on the answers again
+        answerboxAlreadyTouched = false
+        alternateAnswerBox1AlreadyTouched = false
+        alternateAnswerBox2AlreadyTouched = false        
+    end 
 
 end
+
+local function HideCorrect()
+    correctObject.isVisible = false
+    AskQuestion()
+end
+
+local function Hideincorrect()
+    incorrectObject.isVisible = false
+    AskQuestion()
+end    
 
 local function DetermineAlternateAnswers()    
 
@@ -181,8 +241,8 @@ local function PositionAnswers()
 end
 
 -- Transitioning Function to YouWin screen
-local function YouWinTransitionLevel1( )
-    composer.gotoScene("you_win", {effect = "fade", time = 500})
+local function YouWinTransitionLevel3( )
+    composer.gotoScene("Youwin_screen", {effect = "fade", time = 500})
 end
 
 -- Function to Restart Level 1
@@ -194,6 +254,15 @@ end
 
 -- Function to Check User Input
 local function CheckUserAnswerInput()
+
+    if (userAnswer == correctAnswer)then
+        correctObject.isVisible = true
+
+        correctSoundChannel = audio.play(correctSound)
+        timer.performWithDelay(2000, HideCorrect)
+
+        points = points + 1
+
           
     timer.performWithDelay(1600, RestartLevel1) 
 end
@@ -333,7 +402,61 @@ local function RemoveAnswerBoxEventListeners()
     answerbox:removeEventListener("touch", TouchListenerAnswerbox)
     alternateAnswerBox1:removeEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:removeEventListener("touch", TouchListenerAnswerBox2)
-end 
+end
+
+local function UpdateTime()
+    -- decrement the number of sceonds 
+    secondsLeft = secondsLeft - 1
+
+    -- display the number of seconds left in the clock object 
+    clockText.text = secondsLeft .. " "
+
+    if (secondsLeft == 0 ) then 
+        -- reset the number of seconds left 
+        secondsLeft = totalSeconds
+        lives = lives - 1
+        wrongSoundChannel = audio.play(wrongSound)
+
+        if (lives == 0 ) then 
+            timer.cancel(countDownTimer)
+            heart1.isVisible = false
+            heart2.isVisible = false
+            heart3.isvisible = false
+            heart4.isvisible = false
+
+            incorrectObject.isVisible = false 
+            correctObject.isVisible = false 
+            questionText.isVisible = false 
+            countDownTimer.isVisible = false
+            clockText.isVisible = false
+        end    
+
+        -- *** IF THERE ARE NO LIVES LEFT, PLAY A LOSE SOUND, AND SHOW A YOU LOSE IMAGE
+        -- AND CANCEL THE TIMER REMOVE THE THIRD HEART BY MAKING IT INVISIBLE 
+        if (lives == 3) then
+            heart4.isVisible = false
+
+        elseif (lives == 2) then
+            heart3.isVisible = false
+
+        elseif (lives == 1) then 
+            heart2.isVisible = false
+
+        elseif (lives == 0) then 
+            heart1.isVisible = false     
+        end 
+        AskQuestion()
+        
+        -- *** CALL THE FUNCTION TO ASK A NEW QUESTION
+    end
+end
+
+
+-- function that calls the timer 
+local function StartTimer()
+    -- create a countdown timer that loops infinitely 
+    countDownTimer = timer.performWithDelay( 1000, UpdateTime, 0)
+end
 
 ----------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
@@ -415,9 +538,32 @@ function scene:create( event )
     userAnswerBoxPlaceholder = display.newImageRect("Images/userAnswerBoxPlaceholder.png",  130, 130, 0, 0)
     userAnswerBoxPlaceholder.x = display.contentWidth * 0.6
     userAnswerBoxPlaceholder.y = display.contentHeight * 0.9
+    -- create the lives to display ont the screen 
+    heart1 = display.newImageRect("Images/heart.png", 100, 100)
+    heart1.x = display.contentWidth  * 7/8
+    heart1.y = display.contentHeight * 1/7
 
-    ----------------------------------------------------------------------------------
-    --adding objects to the scene group
+    heart2 = display.newImageRect("Images/heart.png", 100, 100)
+    heart2.x = display.contentWidth * 6/8
+    heart2.y = display.contentHeight * 1/7
+
+    heart3 = display.newImageRect("Images/heart.png", 100, 100)
+    heart3.x = display.contentWidth * 3.5/5.5
+    heart3.y = display.contentHeight * 1/7
+
+    heart4 = display.newImageRect("Images/heart.png", 100, 100)
+    heart4.x = display.contentWidth * 1.5/2.9
+    heart4.y = display.contentHeight * 1/7
+
+    clockText = display.newText("Time Left= " .. secondsLeft, display.contentWidth*1/8, display.contentHeight*1/7, nil, 50)    ----------------------------------------------------------------------------------
+    
+    correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
+    correctObject.isVisible = false
+
+    -- Create the incorrect text object and make it visible
+    incorrectObject = display.newText( "incorrect", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
+    incorrectObject.isVisible = false
+
     ----------------------------------------------------------------------------------
 
     sceneGroup:insert( bkg_image ) 
@@ -427,6 +573,7 @@ function scene:create( event )
     sceneGroup:insert( alternateAnswerBox1 )
     sceneGroup:insert( alternateAnswerBox2 )
     sceneGroup:insert( soccerball )
+    sceneGroup:insert( backButton )
 
 end --function scene:create( event )
 
