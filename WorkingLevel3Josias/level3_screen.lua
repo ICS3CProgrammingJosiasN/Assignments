@@ -30,14 +30,8 @@ local scene = composer.newScene( sceneName )
 -- sounds
 local correctSound = audio.loadSound( "Sounds/correctSound.mp3")
 local correctSoundChannel
-local wrongSound = audio.loadSound9 ("Sounds/wrongSound.mp3")
+local wrongSound = audio.loadSound("Sounds/wrongSound.mp3")
 local wrongSoundChannel
-
--- timer
-local totalSeconds = 10 
-local secondsLeft = 10
-local clockText 
-local countDownTimer
 
 -- hearts 
 local lives = 4 
@@ -152,12 +146,12 @@ end
 
 local function HideCorrect()
     correctObject.isVisible = false
-    AskQuestion()
+    DisplayQuestion()
 end
 
 local function Hideincorrect()
     incorrectObject.isVisible = false
-    AskQuestion()
+    DisplayQuestion()
 end    
 
 local function DetermineAlternateAnswers()    
@@ -240,13 +234,9 @@ local function PositionAnswers()
     end
 end
 
--- Transitioning Function to YouWin screen
-local function YouWinTransitionLevel3( )
-    composer.gotoScene("Youwin_screen", {effect = "fade", time = 500})
-end
 
 -- Function to Restart Level 1
-local function RestartLevel1()
+local function RestartLevel3()
     DisplayQuestion()
     DetermineAlternateAnswers()
     PositionAnswers()    
@@ -263,8 +253,57 @@ local function CheckUserAnswerInput()
 
         points = points + 1
 
+            -- update it in the display object
+            pointsText.text = "Points = " .. points 
+
+        if ( points == 5 ) then 
+            youWin = display.newImageRect("Images/Winscreen.png", 1304, 769)
+            youWin.x = display.contentCenterX
+            youWin.y = display.contentCenterY 
+            heart1.isVisible = false
+            heart2.isVisible = false
+            heart3.isvisible = false
+            heart4.isvisible = false
+            incorrectObject.isVisible = false 
+            correctObject.isVisible = false 
+            questionText.isVisible = false  
+            heart3.isVisible = false 
+            heart4.isVisible = false
+        end      
+    else
+        lives = lives - 1
+        secondsLeft = totalSeconds
+        incorrectObject.isVisible = true 
+        wrongSoundChannel = audio.play(wrongSound)
+        timer.performWithDelay(2000, Hideincorrect)
+
+        if (lives == 3) then
+            heart4.isVisible = false
+             
+        elseif (lives == 2) then
+            heart3.isVisible = false
+
+        elseif (lives == 1) then
+            heart2.isVisible = false
+
+        elseif (lives == 0) then 
+            heart1.isVisible = false 
+        end
+
+        
+
+            if ( lives == 0 ) then 
+                gameOver = display.newImageRect("Images/Losescreen.png", 1304, 769)
+                gameOver.x = display.contentCenterX
+                gameOver.y = display.contentCenterY
+            end     
+
+
+            -- clear text        
+    end    
           
     timer.performWithDelay(1600, RestartLevel1) 
+    PositionAnswers()
 end
 
 local function TouchListenerAnswerbox(touch)
@@ -301,6 +340,7 @@ local function TouchListenerAnswerbox(touch)
 
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
+                
 
             --else make box go back to where it was
             else
@@ -341,6 +381,7 @@ local function TouchListenerAnswerBox1(touch)
 
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
+                
 
             --else make box go back to where it was
             else
@@ -380,6 +421,7 @@ local function TouchListenerAnswerBox2(touch)
 
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
+                PositionAnswers()
 
             --else make box go back to where it was
             else
@@ -404,59 +446,7 @@ local function RemoveAnswerBoxEventListeners()
     alternateAnswerBox2:removeEventListener("touch", TouchListenerAnswerBox2)
 end
 
-local function UpdateTime()
-    -- decrement the number of sceonds 
-    secondsLeft = secondsLeft - 1
 
-    -- display the number of seconds left in the clock object 
-    clockText.text = secondsLeft .. " "
-
-    if (secondsLeft == 0 ) then 
-        -- reset the number of seconds left 
-        secondsLeft = totalSeconds
-        lives = lives - 1
-        wrongSoundChannel = audio.play(wrongSound)
-
-        if (lives == 0 ) then 
-            timer.cancel(countDownTimer)
-            heart1.isVisible = false
-            heart2.isVisible = false
-            heart3.isvisible = false
-            heart4.isvisible = false
-
-            incorrectObject.isVisible = false 
-            correctObject.isVisible = false 
-            questionText.isVisible = false 
-            countDownTimer.isVisible = false
-            clockText.isVisible = false
-        end    
-
-        -- *** IF THERE ARE NO LIVES LEFT, PLAY A LOSE SOUND, AND SHOW A YOU LOSE IMAGE
-        -- AND CANCEL THE TIMER REMOVE THE THIRD HEART BY MAKING IT INVISIBLE 
-        if (lives == 3) then
-            heart4.isVisible = false
-
-        elseif (lives == 2) then
-            heart3.isVisible = false
-
-        elseif (lives == 1) then 
-            heart2.isVisible = false
-
-        elseif (lives == 0) then 
-            heart1.isVisible = false     
-        end 
-        AskQuestion()
-        
-        -- *** CALL THE FUNCTION TO ASK A NEW QUESTION
-    end
-end
-
-
--- function that calls the timer 
-local function StartTimer()
-    -- create a countdown timer that loops infinitely 
-    countDownTimer = timer.performWithDelay( 1000, UpdateTime, 0)
-end
 
 ----------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
@@ -502,7 +492,7 @@ function scene:create( event )
 
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Game Screen.png", 2048, 1536)
+    bkg_image = display.newImageRect("Images/Level3ScreenLogan.png", 2048, 1536)
     bkg_image.anchorX = 0
     bkg_image.anchorY = 0
     bkg_image.width = display.contentWidth
@@ -517,6 +507,11 @@ function scene:create( event )
     soccerball = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
     soccerball.x = display.contentWidth*0.385
     soccerball.y = display.contentHeight * 12/20
+
+    -- create Character 
+    character = display.newImageRect("Images/SoccerCharacterLogan@2x.png", 250, 250, 100, 100)
+    character.x = display.contentWidth*0.300
+    character.y = display.contentHeight * 10/18
 
     -- boolean variables stating whether or not the answer was touched
     answerboxAlreadyTouched = false
@@ -539,23 +534,21 @@ function scene:create( event )
     userAnswerBoxPlaceholder.x = display.contentWidth * 0.6
     userAnswerBoxPlaceholder.y = display.contentHeight * 0.9
     -- create the lives to display ont the screen 
-    heart1 = display.newImageRect("Images/heart.png", 100, 100)
-    heart1.x = display.contentWidth  * 7/8
+    heart1 = display.newImageRect("Images/heart.png", 50, 50)
+    heart1.x = display.contentWidth  * 7.8/8
     heart1.y = display.contentHeight * 1/7
 
-    heart2 = display.newImageRect("Images/heart.png", 100, 100)
-    heart2.x = display.contentWidth * 6/8
+    heart2 = display.newImageRect("Images/heart.png", 50, 50)
+    heart2.x = display.contentWidth * 7.4/8
     heart2.y = display.contentHeight * 1/7
 
-    heart3 = display.newImageRect("Images/heart.png", 100, 100)
-    heart3.x = display.contentWidth * 3.5/5.5
+    heart3 = display.newImageRect("Images/heart.png", 50, 50)
+    heart3.x = display.contentWidth * 7/8
     heart3.y = display.contentHeight * 1/7
 
-    heart4 = display.newImageRect("Images/heart.png", 100, 100)
-    heart4.x = display.contentWidth * 1.5/2.9
+    heart4 = display.newImageRect("Images/heart.png", 50, 50)
+    heart4.x = display.contentWidth * 6.6/8
     heart4.y = display.contentHeight * 1/7
-
-    clockText = display.newText("Time Left= " .. secondsLeft, display.contentWidth*1/8, display.contentHeight*1/7, nil, 50)    ----------------------------------------------------------------------------------
     
     correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     correctObject.isVisible = false
@@ -563,6 +556,9 @@ function scene:create( event )
     -- Create the incorrect text object and make it visible
     incorrectObject = display.newText( "incorrect", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     incorrectObject.isVisible = false
+
+    -- display the amount of points as text object
+    pointsText = display.newText("Points = " .. points, display.contentWidth/3, display.contentHeight/3, nil,50)
 
     ----------------------------------------------------------------------------------
 
@@ -597,7 +593,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        RestartLevel1()
+        RestartLevel3()
         AddAnswerBoxEventListeners() 
 
     end
