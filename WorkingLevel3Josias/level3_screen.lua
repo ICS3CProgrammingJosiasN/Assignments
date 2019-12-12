@@ -28,6 +28,8 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- sounds
+local soccerSound = audio.loadSound( "Sounds/soccerSound.mp3")
+local soccerSoundChannel
 local correctSound = audio.loadSound( "Sounds/correctSound.mp3")
 local correctSoundChannel
 local wrongSound = audio.loadSound("Sounds/wrongSound.mp3")
@@ -269,6 +271,8 @@ local function CheckUserAnswerInput()
             questionText.isVisible = false  
             heart3.isVisible = false 
             heart4.isVisible = false
+            correctSoundChannel = audio.play(correctSound)
+            timer.performWithDelay(2000, HideCorrect)            
         end      
     else
         lives = lives - 1
@@ -296,6 +300,8 @@ local function CheckUserAnswerInput()
                 gameOver = display.newImageRect("Images/Losescreen.png", 1304, 769)
                 gameOver.x = display.contentCenterX
                 gameOver.y = display.contentCenterY
+                wrongSoundChannel = audio.play(wrongSound)
+                timer.performWithDelay(2000, Hideincorrect)                
             end     
 
 
@@ -595,6 +601,7 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
         RestartLevel3()
         AddAnswerBoxEventListeners() 
+        soccerSoundChannel = audio.play(soccerSound)
 
     end
 
