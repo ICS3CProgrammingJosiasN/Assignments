@@ -4,7 +4,7 @@
 -- Created by: Your Name
 -- Special thanks to Wal Wal for helping in the design of this framework.
 -- Date: Month Day, Year
--- Description: This is the credits page, displaying a back button to the main menu.
+-- Description: This is the instruction page, displaying a back button to the main menu.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------

@@ -211,7 +211,7 @@ local function PositionAnswers()
         --alternateAnswerBox2
         alternateAnswerBox2.y = display.contentHeight * 0.4
 
-        --alternateAnswerBox1
+        --alternateAnswerBox1AlreadyTouched
         alternateAnswerBox1.y = display.contentHeight * 0.7
 
         --remembering their positions to return the answer in case it's wrong
@@ -308,8 +308,8 @@ local function CheckUserAnswerInput()
             -- clear text        
     end    
           
-    timer.performWithDelay(1600, RestartLevel1) 
-    PositionAnswers()
+    timer.performWithDelay(1600, RestartLevel3) 
+    
 end
 
 local function TouchListenerAnswerbox(touch)
@@ -427,8 +427,8 @@ local function TouchListenerAnswerBox2(touch)
 
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
-                PositionAnswers()
-
+               
+ 
             --else make box go back to where it was
             else
                 alternateAnswerBox2.x = alternateAnswerBox2PreviousX
