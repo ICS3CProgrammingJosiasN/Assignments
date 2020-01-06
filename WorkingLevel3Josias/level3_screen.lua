@@ -576,6 +576,12 @@ function scene:create( event )
     sceneGroup:insert( alternateAnswerBox2 )
     sceneGroup:insert( soccerball )
     sceneGroup:insert( backButton )
+    sceneGroup:insert( character )
+    sceneGroup:insert( heart1 )
+    sceneGroup:insert( heart2 )
+    sceneGroup:insert( heart3 )
+    sceneGroup:insert( heart4 )
+    sceneGroup:insert( pointsText )
 
 end --function scene:create( event )
 
