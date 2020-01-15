@@ -1,9 +1,9 @@
 -----------------------------------------------------------------------------------------
 --
 -- game_level1.lua
--- Created by: Daniel
--- Date: Nov. 22nd, 2014
--- Description: This is the level 1 screen of the game.
+-- Created by: Josias
+-- Date: 
+-- Description: This is the level 3 screen of the game.
 -----------------------------------------------------------------------------------------
 
 
