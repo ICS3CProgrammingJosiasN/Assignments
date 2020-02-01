@@ -1,9 +1,9 @@
 -----------------------------------------------------------------------------------------
 --
 -- game_level1.lua
--- Created by: Daniel
--- Date: Nov. 22nd, 2014
--- Description: This is the level 1 screen of the game.
+-- Created by: Josias
+-- Date: 
+-- Description: This is the level 3 screen of the game.
 -----------------------------------------------------------------------------------------
 
 
@@ -576,6 +576,8 @@ function scene:create( event )
     sceneGroup:insert( alternateAnswerBox2 )
     sceneGroup:insert( soccerball )
     sceneGroup:insert( backButton )
+
+    sceneGroup:insert( character )
     sceneGroup:insert( heart1 )
     sceneGroup:insert( heart2 )
     sceneGroup:insert( heart3 )
@@ -628,9 +630,6 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        
-
-    -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
